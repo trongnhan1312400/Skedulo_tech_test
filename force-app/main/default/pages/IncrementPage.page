@@ -1,0 +1,37 @@
+<apex:page Controller="IncrementController">
+    <script type="text/javascript">
+    function increaseCount(recordId, recordType) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.IncrementController.increaseCount}',
+            recordId, recordType,
+            function(result, event) {
+                updateCountCallback();
+            }, 
+            {escape: true}
+        );
+    }
+    </script>
+    <apex:form >
+        <apex:actionFunction action="{!updateCount}" name="updateCountCallback"/>
+        <apex:inputText value="{!searchKey}" label="Input"/>
+        <apex:commandButton value="Search records" action="{!search}"/>
+        <apex:pageBlock title="Search Result">
+            <apex:pageBlockTable value="{!result}" var="r">
+                <apex:column headerValue="Record Type">
+                        {!r.recordType}
+                </apex:column>
+                <apex:column headerValue="Record Name">
+                        {!r.recordName}
+                </apex:column>
+                <apex:column headerValue="Counter">
+                        {!r.count}
+                </apex:column>
+                <apex:column headerValue="Click to update counter">
+                   <apex:commandLink onclick="increaseCount('{!r.recordId}', '{!r.recordType}'); return false;">
+                   		Increment Counter
+                   </apex:commandLink>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,21 @@
+<apex:page Controller="SearchAccountContactController">
+    <apex:form >
+        <apex:inputText value="{!searchKey}" label="Input"/>
+        <apex:commandButton value="Search records" action="{!search}"/>
+        <apex:pageBlock title="Search Result">
+            <apex:pageBlockTable value="{!result}" var="r">
+                <apex:column headerValue="Record Type">
+                        {!r.recordType}
+                </apex:column>
+                <apex:column headerValue="Record Name">
+                        {!r.recordName}
+                </apex:column>
+                <apex:column headerValue="Click To Open">
+                   <apex:outputLink value="/{!r.recordId}" target="_blank">
+                   		View
+                   </apex:outputLink>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
